@@ -40,7 +40,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
 .hero-desc{font-size:14px;color:var(--muted2);max-width:520px;margin:0 auto 36px;line-height:1.75}
 .hero-rule{width:56px;height:2px;background:linear-gradient(90deg,transparent,var(--c1),transparent);margin:0 auto 36px}
 
-/* STAGE PILLS NAV */
+/* STAGE PILLS */
 .stage-nav{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px;margin-bottom:40px;padding:0 20px;position:relative;z-index:1}
 .stage-pill{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:100px;padding:7px 15px;font-size:11px;font-weight:500;color:var(--muted2);cursor:pointer;transition:all .2s;white-space:nowrap}
 .stage-pill:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.15);color:var(--white)}
@@ -75,51 +75,85 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
 .section-box{background:var(--s1);border:1px solid rgba(255,255,255,.07);border-radius:var(--radius);overflow:hidden}
 .section-box-accent{height:3px;width:100%}
 
-/* GROUP ROW - 3 COLUMNS */
-.cat-group{display:grid;grid-template-columns:152px 1fr 320px;border-bottom:1px solid rgba(255,255,255,.06)}
+/* ══════════════════════════════════════════
+   CAT-GROUP: 3-column grid
+   col1=140px  col2=1fr  col3=440px
+   Each .row-pair is one grid row spanning col2+col3.
+   .col-cat spans ALL row-pairs vertically.
+══════════════════════════════════════════ */
+.cat-group{
+  display:grid;
+  grid-template-columns:140px 1fr 440px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
 .cat-group:last-child{border-bottom:none}
 
-/* COLUMN 1 — CATEGORY */
-.col-cat{border-right:1px solid rgba(255,255,255,.06);padding:20px 16px;display:flex;align-items:flex-start;gap:10px}
+/* Category label — spans all rows */
+.col-cat{
+  grid-column:1;
+  grid-row:1 / span 999;
+  border-right:1px solid rgba(255,255,255,.06);
+  padding:20px 14px;
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+}
 .cat-color-bar{width:3px;border-radius:2px;flex-shrink:0;align-self:stretch}
 .cat-label-inner{display:flex;flex-direction:column;gap:5px;padding-top:2px}
 .cat-icon{font-size:18px;line-height:1}
 .cat-name{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;line-height:1.3}
 .cat-count-lbl{font-size:10px;color:var(--muted)}
 
-/* COLUMN 2 — MODELS */
-.col-models{border-right:1px solid rgba(255,255,255,.06)}
-.model-row{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.04);transition:background .15s}
-.model-row:last-child{border-bottom:none}
-.model-row:hover{background:rgba(255,255,255,.02)}
+/* Row pair: model (col2) + kpi (col3) — SAME grid row = perfect alignment */
+.row-pair{
+  grid-column:2 / 4;
+  display:grid;
+  grid-template-columns:1fr 440px;
+  border-bottom:1px solid rgba(255,255,255,.04);
+}
+.row-pair:last-child{border-bottom:none}
+
+/* Model cell */
+.model-cell{
+  padding:14px 20px;
+  border-right:1px solid rgba(255,255,255,.06);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  transition:background .15s;
+}
+.model-cell:hover{background:rgba(255,255,255,.02)}
 .model-name{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:var(--white);margin-bottom:4px;line-height:1.3}
-.model-desc{font-size:11.5px;color:var(--muted2);line-height:1.6}
+.model-desc{font-size:11.5px;color:var(--muted2);line-height:1.55}
 
-/* COLUMN 3 — KPI */
-.col-kpi{}
-.kpi-cell{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.04);min-height:66px;display:flex;align-items:center}
-.kpi-cell:last-child{border-bottom:none}
+/* KPI cell — same row, guaranteed aligned */
+.kpi-cell{
+  padding:12px 16px;
+  display:flex;
+  align-items:center;
+}
 
-/* KPI CHIPS — commercial / big number style */
+/* KPI CHIPS */
 .kpi-chips{display:flex;flex-wrap:wrap;gap:7px;width:100%}
-.kpi-chip{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:9px 12px;flex:1;min-width:76px}
+.kpi-chip{background:rgba(0,0,0,.38);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:10px 13px;flex:1;min-width:96px}
 .kpi-chip-num{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;line-height:1;margin-bottom:3px;white-space:nowrap}
 .kpi-chip-num .unit{font-size:12px;font-weight:400;color:var(--muted);margin-left:1px}
 .kpi-chip-txt{font-size:10px;color:var(--muted2);line-height:1.4}
-.kpi-empty{font-size:10px;color:rgba(255,255,255,.1);font-style:italic;padding:2px 0}
+.kpi-empty{font-size:10px;color:rgba(255,255,255,.1);font-style:italic}
 
 /* RESPONSIVE */
+@media(max-width:1100px){
+  .cat-group{grid-template-columns:130px 1fr 380px}
+  .row-pair{grid-template-columns:1fr 380px}
+}
 @media(max-width:960px){
-  .cat-group{grid-template-columns:1fr}
-  .col-cat{border-right:none;border-bottom:1px solid rgba(255,255,255,.06);padding:14px 16px}
-  .col-models{border-right:none}
-  .col-kpi{border-top:1px solid rgba(255,255,255,.06)}
+  .cat-group{display:block}
+  .col-cat{display:flex;border-right:none;border-bottom:1px solid rgba(255,255,255,.06);padding:14px 16px}
+  .row-pair{display:block;border-bottom:1px solid rgba(255,255,255,.05)}
+  .model-cell{border-right:none;border-bottom:1px solid rgba(255,255,255,.04)}
+  .kpi-cell{border-top:none}
   .header-stats{display:none}
   .stats-bar{grid-template-columns:1fr 1fr}
-}
-@media(max-width:560px){
-  .stats-bar{grid-template-columns:1fr 1fr}
-  .hero h1{font-size:24px}
 }
 
 /* FOOTER */
@@ -150,7 +184,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
   <div class="hero-rule"></div>
 </section>
 
-<div class="stage-nav" id="stageNav">
+<div class="stage-nav">
   <div class="stage-pill active" onclick="filterStage('all',this)"><div class="stage-pill-dot" style="background:var(--c1)"></div>Todas</div>
   <div class="stage-pill" onclick="filterStage('01',this)"><div class="stage-pill-dot" style="background:#00d4ff"></div>01 · Onboarding</div>
   <div class="stage-pill" onclick="filterStage('02',this)"><div class="stage-pill-dot" style="background:#00e896"></div>02 · Conocimiento</div>
@@ -204,34 +238,42 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
             <div class="cat-count-lbl">6 modelos</div>
           </div>
         </div>
-        <div class="col-models">
-          <div class="model-row"><div class="model-name">Cuentas Mula (Onboarding)</div><div class="model-desc">Identificación de grupos de clientes apócrifos o altamente sospechosos que aperturan cuentas.</div></div>
-          <div class="model-row"><div class="model-name">Análisis Documental — Comprobantes de Domicilio</div><div class="model-desc">Extracción y validación de recibos (CFE, agua, gas): verifica vigencia, integridad y puntos de seguridad.</div></div>
-          <div class="model-row"><div class="model-name">Análisis Documental — Actas de Nacimiento</div><div class="model-desc">Valida tutela, nombre y fecha de nacimiento del menor conforme al acta de nacimiento.</div></div>
-          <div class="model-row"><div class="model-name">Análisis Documental — Constancia Fiscal</div><div class="model-desc">Identificación de alteraciones y anomalías en constancia fiscal del cliente.</div></div>
-          <div class="model-row"><div class="model-name">Análisis Documental — Dictámenes Jurídicos</div><div class="model-desc">Análisis de actas constitutivas para determinar facultades legales y socios.</div></div>
-          <div class="model-row"><div class="model-name">Videos Verificación</div><div class="model-desc">Identificación de anomalías en video o audio de verificación biométrica.</div></div>
-        </div>
-        <div class="col-kpi">
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Cuentas Mula (Onboarding)</div><div class="model-desc">Identificación de grupos de clientes apócrifos o altamente sospechosos que aperturan cuentas.</div></div>
           <div class="kpi-cell"><div class="kpi-chips">
             <div class="kpi-chip"><div class="kpi-chip-num" style="color:#00d4ff">7k<span class="unit">/mes</span></div><div class="kpi-chip-txt">Cuentas mula bloqueadas</div></div>
             <div class="kpi-chip"><div class="kpi-chip-num" style="color:#00d4ff">320k+</div><div class="kpi-chip-txt">Históricas bloqueadas</div></div>
           </div></div>
+        </div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Análisis Documental — Comprobantes de Domicilio</div><div class="model-desc">Extracción y validación de recibos (CFE, agua, gas): verifica vigencia, integridad y puntos de seguridad.</div></div>
           <div class="kpi-cell"><div class="kpi-chips">
             <div class="kpi-chip"><div class="kpi-chip-num" style="color:#00d4ff">18k+<span class="unit">/mes</span></div><div class="kpi-chip-txt">Comprobantes procesados</div></div>
             <div class="kpi-chip"><div class="kpi-chip-num" style="color:#00d4ff">55%</div><div class="kpi-chip-txt">Sin intervención manual</div></div>
             <div class="kpi-chip"><div class="kpi-chip-num" style="color:#00d4ff">4.5x</div><div class="kpi-chip-txt">Más rápido</div></div>
           </div></div>
+        </div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Análisis Documental — Actas de Nacimiento</div><div class="model-desc">Valida tutela, nombre y fecha de nacimiento del menor conforme al acta.</div></div>
           <div class="kpi-cell"><div class="kpi-chips">
             <div class="kpi-chip"><div class="kpi-chip-num" style="color:#00d4ff">70<span class="unit">/mes</span></div><div class="kpi-chip-txt">Actas validadas</div></div>
           </div></div>
+        </div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Análisis Documental — Constancia Fiscal</div><div class="model-desc">Identificación de alteraciones y anomalías en constancia fiscal del cliente.</div></div>
           <div class="kpi-cell"><div class="kpi-chips">
             <div class="kpi-chip"><div class="kpi-chip-num" style="color:#00d4ff">40k<span class="unit">/mes</span></div><div class="kpi-chip-txt">Páginas analizadas</div></div>
           </div></div>
+        </div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Análisis Documental — Dictámenes Jurídicos</div><div class="model-desc">Análisis de actas constitutivas para determinar facultades legales y socios.</div></div>
           <div class="kpi-cell"><div class="kpi-chips">
             <div class="kpi-chip"><div class="kpi-chip-num" style="color:#00d4ff">180<span class="unit">/mes</span></div><div class="kpi-chip-txt">Dictámenes</div></div>
             <div class="kpi-chip"><div class="kpi-chip-num" style="color:#00d4ff">37.5x</div><div class="kpi-chip-txt">Más rápido vs evaluador</div></div>
           </div></div>
+        </div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Videos Verificación</div><div class="model-desc">Identificación de anomalías en video o audio de verificación biométrica.</div></div>
           <div class="kpi-cell"><div class="kpi-chips">
             <div class="kpi-chip"><div class="kpi-chip-num" style="color:#00d4ff">89</div><div class="kpi-chip-txt">Ofertas fraudulentas bloqueadas</div></div>
             <div class="kpi-chip"><div class="kpi-chip-num" style="color:#00d4ff">$9M</div><div class="kpi-chip-txt">MXN afectación evitada</div></div>
@@ -249,17 +291,21 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
             <div class="cat-count-lbl">4 modelos</div>
           </div>
         </div>
-        <div class="col-models">
-          <div class="model-row"><div class="model-name">Calidad de Documentos</div><div class="model-desc">Filtro que detecta si un documento es legible y no ha sido alterado digitalmente.</div></div>
-          <div class="model-row"><div class="model-name">Transcripción de Estados de Cuenta</div><div class="model-desc">Digitalización inteligente de estados de cuenta de los principales bancos.</div></div>
-          <div class="model-row"><div class="model-name">Transcripción de Recibos de Nómina</div><div class="model-desc">Transcripción de información de recibos de nómina e ingresos relevantes.</div></div>
-          <div class="model-row"><div class="model-name">Validación y Cotización de Propiedades</div><div class="model-desc">Valida inmueble via Google Maps y calcula valor estimado según características y mercado local.</div></div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Calidad de Documentos</div><div class="model-desc">Filtro que detecta si un documento es legible y no ha sido alterado digitalmente.</div></div>
+          <div class="kpi-cell"><span class="kpi-empty">Sin KPI registrado</span></div>
         </div>
-        <div class="col-kpi">
-          <div class="kpi-cell"><div class="kpi-empty">Sin KPI registrado</div></div>
-          <div class="kpi-cell"><div class="kpi-empty">Sin KPI registrado</div></div>
-          <div class="kpi-cell"><div class="kpi-empty">Sin KPI registrado</div></div>
-          <div class="kpi-cell"><div class="kpi-empty">Sin KPI registrado</div></div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Transcripción de Estados de Cuenta</div><div class="model-desc">Digitalización inteligente de estados de cuenta de los principales bancos.</div></div>
+          <div class="kpi-cell"><span class="kpi-empty">Sin KPI registrado</span></div>
+        </div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Transcripción de Recibos de Nómina</div><div class="model-desc">Transcripción de información de recibos de nómina e ingresos relevantes.</div></div>
+          <div class="kpi-cell"><span class="kpi-empty">Sin KPI registrado</span></div>
+        </div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Validación y Cotización de Propiedades</div><div class="model-desc">Valida inmueble via Google Maps y calcula valor estimado según mercado local.</div></div>
+          <div class="kpi-cell"><span class="kpi-empty">Sin KPI registrado</span></div>
         </div>
       </div>
 
@@ -285,19 +331,23 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
             <div class="cat-count-lbl">4 modelos</div>
           </div>
         </div>
-        <div class="col-models">
-          <div class="model-row"><div class="model-name">Customer Tags</div><div class="model-desc">Etiquetado inteligente de clientes por comportamiento relevante y perfil financiero.</div></div>
-          <div class="model-row"><div class="model-name">Memorias</div><div class="model-desc">Memoria a largo plazo para identificación y almacenamiento del interés del usuario.</div></div>
-          <div class="model-row"><div class="model-name">Ingresos Recurrentes</div><div class="model-desc">Identificación de ingresos constantes, útil para originación crediticia o scoring de riesgo.</div></div>
-          <div class="model-row"><div class="model-name">Forecast Facturación Clientes</div><div class="model-desc">Proyección de crecimiento de ventas en clientes TPV.</div></div>
-        </div>
-        <div class="col-kpi">
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Customer Tags</div><div class="model-desc">Etiquetado inteligente de clientes por comportamiento relevante y perfil financiero.</div></div>
           <div class="kpi-cell"><div class="kpi-chips">
             <div class="kpi-chip"><div class="kpi-chip-num" style="color:#c97aff">400k+<span class="unit">/mes</span></div><div class="kpi-chip-txt">Clientes etiquetados</div></div>
           </div></div>
-          <div class="kpi-cell"><div class="kpi-empty">Sin KPI registrado</div></div>
-          <div class="kpi-cell"><div class="kpi-empty">Sin KPI registrado</div></div>
-          <div class="kpi-cell"><div class="kpi-empty">Sin KPI registrado</div></div>
+        </div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Memorias</div><div class="model-desc">Memoria a largo plazo para identificación y almacenamiento del interés del usuario.</div></div>
+          <div class="kpi-cell"><span class="kpi-empty">Sin KPI registrado</span></div>
+        </div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Ingresos Recurrentes</div><div class="model-desc">Identificación de ingresos constantes, útil para originación crediticia o scoring de riesgo.</div></div>
+          <div class="kpi-cell"><span class="kpi-empty">Sin KPI registrado</span></div>
+        </div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Forecast Facturación Clientes</div><div class="model-desc">Proyección de crecimiento de ventas en clientes TPV.</div></div>
+          <div class="kpi-cell"><span class="kpi-empty">Sin KPI registrado</span></div>
         </div>
       </div>
 
@@ -310,11 +360,9 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
             <div class="cat-count-lbl">1 modelo</div>
           </div>
         </div>
-        <div class="col-models">
-          <div class="model-row"><div class="model-name">Gastos Recurrentes</div><div class="model-desc">Clasifica comportamientos financieros del cliente a lo largo del tiempo.</div></div>
-        </div>
-        <div class="col-kpi">
-          <div class="kpi-cell"><div class="kpi-empty">Sin KPI registrado</div></div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Gastos Recurrentes</div><div class="model-desc">Clasifica comportamientos financieros del cliente a lo largo del tiempo.</div></div>
+          <div class="kpi-cell"><span class="kpi-empty">Sin KPI registrado</span></div>
         </div>
       </div>
 
@@ -340,23 +388,27 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
             <div class="cat-count-lbl">4 modelos</div>
           </div>
         </div>
-        <div class="col-models">
-          <div class="model-row"><div class="model-name">Asistente Virtual (Voz y Texto)</div><div class="model-desc">Asistentes inteligentes que resuelven dudas de productos en App, Web y WhatsApp.</div></div>
-          <div class="model-row"><div class="model-name">HAVI Aclaraciones</div><div class="model-desc">Modelo especializado en gestión y creación automatizada de aclaraciones.</div></div>
-          <div class="model-row"><div class="model-name">Integración IVR + WhatsApp</div><div class="model-desc">Integración de IVR + WhatsApp con transferencias a teléfono bajo solicitud del cliente.</div></div>
-          <div class="model-row"><div class="model-name">Servicio de Voz (Interacción Natural)</div><div class="model-desc">Interfaz de voz avanzada con respuestas en español, voz de catálogo o personalizada.</div></div>
-        </div>
-        <div class="col-kpi">
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Asistente Virtual (Voz y Texto)</div><div class="model-desc">Asistentes inteligentes que resuelven dudas de productos en App, Web y WhatsApp.</div></div>
           <div class="kpi-cell"><div class="kpi-chips">
             <div class="kpi-chip"><div class="kpi-chip-num" style="color:#ff6b35">700k<span class="unit">/año</span></div><div class="kpi-chip-txt">Respuestas generadas</div></div>
-            <div class="kpi-chip"><div class="kpi-chip-num" style="color:#ff6b35">2.1s</div><div class="kpi-chip-txt">Tiempo de respuesta</div></div>
+            <div class="kpi-chip"><div class="kpi-chip-num" style="color:#ff6b35">2.1s</div><div class="kpi-chip-txt">Tiempo respuesta</div></div>
             <div class="kpi-chip"><div class="kpi-chip-num" style="color:#ff6b35">$4.9M</div><div class="kpi-chip-txt">MXN equiv. horas hombre/año</div></div>
           </div></div>
+        </div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">HAVI Aclaraciones</div><div class="model-desc">Modelo especializado en gestión y creación automatizada de aclaraciones.</div></div>
           <div class="kpi-cell"><div class="kpi-chips">
             <div class="kpi-chip"><div class="kpi-chip-num" style="color:#ff6b35">500+<span class="unit">/mes</span></div><div class="kpi-chip-txt">Aclaraciones iniciadas</div></div>
           </div></div>
-          <div class="kpi-cell"><div class="kpi-empty">Sin KPI registrado</div></div>
-          <div class="kpi-cell"><div class="kpi-empty">Sin KPI registrado</div></div>
+        </div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Integración IVR + WhatsApp</div><div class="model-desc">Integración de IVR + WhatsApp con transferencias a teléfono bajo solicitud del cliente.</div></div>
+          <div class="kpi-cell"><span class="kpi-empty">Sin KPI registrado</span></div>
+        </div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Servicio de Voz (Interacción Natural)</div><div class="model-desc">Interfaz de voz avanzada con respuestas en español, voz de catálogo o personalizada.</div></div>
+          <div class="kpi-cell"><span class="kpi-empty">Sin KPI registrado</span></div>
         </div>
       </div>
 
@@ -382,16 +434,18 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
             <div class="cat-count-lbl">3 modelos</div>
           </div>
         </div>
-        <div class="col-models">
-          <div class="model-row"><div class="model-name">Venta Cruzada — Call Center</div><div class="model-desc">Identificación de oportunidades para ofrecer productos adicionales en llamadas al call center.</div></div>
-          <div class="model-row"><div class="model-name">Siguiente Producto Recomendado</div><div class="model-desc">Motor de recomendación de productos basado en la etapa de vida del cliente.</div></div>
-          <div class="model-row"><div class="model-name">Asistente de Ventas Digitales (Voz / WhatsApp)</div><div class="model-desc">Contacto para ofrecer oferta preaprobada, cotizaciones personalizadas y FAQ (Efectivo Inmediato).</div></div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Venta Cruzada — Call Center</div><div class="model-desc">Identificación de oportunidades para ofrecer productos adicionales en llamadas.</div></div>
+          <div class="kpi-cell"><span class="kpi-empty">Sin KPI registrado</span></div>
         </div>
-        <div class="col-kpi">
-          <div class="kpi-cell"><div class="kpi-empty">Sin KPI registrado</div></div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Siguiente Producto Recomendado</div><div class="model-desc">Motor de recomendación de productos basado en la etapa de vida del cliente.</div></div>
           <div class="kpi-cell"><div class="kpi-chips">
             <div class="kpi-chip"><div class="kpi-chip-num" style="color:#ffcc00">100k<span class="unit">/mes</span></div><div class="kpi-chip-txt">Recomendaciones generadas</div></div>
           </div></div>
+        </div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Asistente de Ventas Digitales (Voz / WhatsApp)</div><div class="model-desc">Contacto para ofrecer oferta preaprobada, cotizaciones personalizadas y FAQ (Efectivo Inmediato).</div></div>
           <div class="kpi-cell"><div class="kpi-chips">
             <div class="kpi-chip"><div class="kpi-chip-num" style="color:#ffcc00">+70%</div><div class="kpi-chip-txt">Mayor colocación vs canal tradicional</div></div>
           </div></div>
@@ -420,20 +474,22 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
             <div class="cat-count-lbl">3 modelos</div>
           </div>
         </div>
-        <div class="col-models">
-          <div class="model-row"><div class="model-name">Asistente de Cobranza Activa (WhatsApp)</div><div class="model-desc">Gestión automatizada de recordatorios de pago a clientes en mora vía WhatsApp.</div></div>
-          <div class="model-row"><div class="model-name">Cobranza Preventiva (Voz)</div><div class="model-desc">Llamadas de recordatorio de pago mínimo preventivas antes de que el cliente caiga en impago.</div></div>
-          <div class="model-row"><div class="model-name">Cobranza con Negociación</div><div class="model-desc">IA capacitada para ofrecer esquemas de pago personalizados a clientes en mora.</div></div>
-        </div>
-        <div class="col-kpi">
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Asistente de Cobranza Activa (WhatsApp)</div><div class="model-desc">Gestión automatizada de recordatorios de pago a clientes en mora vía WhatsApp.</div></div>
           <div class="kpi-cell"><div class="kpi-chips">
             <div class="kpi-chip"><div class="kpi-chip-num" style="color:#ff3f6c">−4 pb</div><div class="kpi-chip-txt">Reducción no-pago vs estrategia tradicional</div></div>
             <div class="kpi-chip"><div class="kpi-chip-num" style="color:#ff3f6c">−9 pb</div><div class="kpi-chip-txt">Vs grupo de control</div></div>
           </div></div>
+        </div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Cobranza Preventiva (Voz)</div><div class="model-desc">Llamadas de recordatorio de pago mínimo preventivas antes de que el cliente caiga en impago.</div></div>
           <div class="kpi-cell"><div class="kpi-chips">
             <div class="kpi-chip"><div class="kpi-chip-num" style="color:#ff3f6c">10+</div><div class="kpi-chip-txt">Equiv. colaboradores de cobranza</div></div>
           </div></div>
-          <div class="kpi-cell"><div class="kpi-empty">Sin KPI registrado</div></div>
+        </div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Cobranza con Negociación</div><div class="model-desc">IA capacitada para ofrecer esquemas de pago personalizados a clientes en mora.</div></div>
+          <div class="kpi-cell"><span class="kpi-empty">Sin KPI registrado</span></div>
         </div>
       </div>
 
@@ -459,29 +515,41 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
             <div class="cat-count-lbl">8 modelos</div>
           </div>
         </div>
-        <div class="col-models">
-          <div class="model-row"><div class="model-name">Anomalías Captación / Colocación</div><div class="model-desc">Detección de patrones inusuales en saldos, depósitos o anomalías en créditos.</div></div>
-          <div class="model-row"><div class="model-name">Detección de Anomalías en Estados de Cuenta</div><div class="model-desc">Identificación de alteraciones en SPEIs, CLABE y nombre en estados de cuenta.</div></div>
-          <div class="model-row"><div class="model-name">Detección de Anomalías en Pagos con Tarjeta</div><div class="model-desc">Detección de anomalías en pagos para cubrir requisitos VISA en materia de prevención.</div></div>
-          <div class="model-row"><div class="model-name">Detección de Anomalías SPEI</div><div class="model-desc">Cruce de datos de transferencias con ubicación geográfica para detectar fraudes.</div></div>
-          <div class="model-row"><div class="model-name">Anomalías Facturación TPV</div><div class="model-desc">Detección de irregularidades en la facturación de comercios punto de venta.</div></div>
-          <div class="model-row"><div class="model-name">Comunidades Transaccionales</div><div class="model-desc">Búsqueda de comunidades anómalas transaccionales con TDD, TDC y SPEI.</div></div>
-          <div class="model-row"><div class="model-name">Perfil Transaccional Anómalo</div><div class="model-desc">Análisis de transacciones anómalas (SPEI, TDC/TDD, ligas de cobro) conforme al historial.</div></div>
-          <div class="model-row"><div class="model-name">Búsqueda Difusa</div><div class="model-desc">Algoritmos de búsqueda de nombres en listas negras y personas sancionadas.</div></div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Anomalías Captación / Colocación</div><div class="model-desc">Detección de patrones inusuales en saldos, depósitos o anomalías en créditos.</div></div>
+          <div class="kpi-cell"><span class="kpi-empty">Sin KPI registrado</span></div>
         </div>
-        <div class="col-kpi">
-          <div class="kpi-cell"><div class="kpi-empty">Sin KPI registrado</div></div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Detección de Anomalías en Estados de Cuenta</div><div class="model-desc">Identificación de alteraciones en SPEIs, CLABE y nombre en estados de cuenta.</div></div>
           <div class="kpi-cell"><div class="kpi-chips">
             <div class="kpi-chip"><div class="kpi-chip-num" style="color:#ff6b35">300+<span class="unit">/mes</span></div><div class="kpi-chip-txt">Folios procesados</div></div>
           </div></div>
-          <div class="kpi-cell"><div class="kpi-empty">Sin KPI registrado</div></div>
-          <div class="kpi-cell"><div class="kpi-empty">Sin KPI registrado</div></div>
+        </div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Detección de Anomalías en Pagos con Tarjeta</div><div class="model-desc">Detección de anomalías en pagos para cubrir requisitos VISA en materia de prevención.</div></div>
+          <div class="kpi-cell"><span class="kpi-empty">Sin KPI registrado</span></div>
+        </div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Detección de Anomalías SPEI</div><div class="model-desc">Cruce de datos de transferencias con ubicación geográfica para detectar fraudes.</div></div>
+          <div class="kpi-cell"><span class="kpi-empty">Sin KPI registrado</span></div>
+        </div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Anomalías Facturación TPV</div><div class="model-desc">Detección de irregularidades en la facturación de comercios punto de venta.</div></div>
           <div class="kpi-cell"><div class="kpi-chips">
             <div class="kpi-chip"><div class="kpi-chip-num" style="color:#ff6b35">780k<span class="unit">/mes</span></div><div class="kpi-chip-txt">Transacciones analizadas</div></div>
           </div></div>
-          <div class="kpi-cell"><div class="kpi-empty">Sin KPI registrado</div></div>
-          <div class="kpi-cell"><div class="kpi-empty">Sin KPI registrado</div></div>
-          <div class="kpi-cell"><div class="kpi-empty">Sin KPI registrado</div></div>
+        </div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Comunidades Transaccionales</div><div class="model-desc">Búsqueda de comunidades anómalas transaccionales con TDD, TDC y SPEI.</div></div>
+          <div class="kpi-cell"><span class="kpi-empty">Sin KPI registrado</span></div>
+        </div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Perfil Transaccional Anómalo</div><div class="model-desc">Análisis de transacciones anómalas (SPEI, TDC/TDD, ligas de cobro) conforme al historial.</div></div>
+          <div class="kpi-cell"><span class="kpi-empty">Sin KPI registrado</span></div>
+        </div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Búsqueda Difusa</div><div class="model-desc">Algoritmos de búsqueda de nombres en listas negras y personas sancionadas.</div></div>
+          <div class="kpi-cell"><span class="kpi-empty">Sin KPI registrado</span></div>
         </div>
       </div>
 
@@ -507,18 +575,20 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
             <div class="cat-count-lbl">3 modelos</div>
           </div>
         </div>
-        <div class="col-models">
-          <div class="model-row"><div class="model-name">Propensión de Fuga Logins</div><div class="model-desc">Detección de señales de abandono basadas en disminución de inicios de sesión.</div></div>
-          <div class="model-row"><div class="model-name">Propensión de Fuga TDC</div><div class="model-desc">Alerta temprana sobre clientes que podrían dejar de usar su tarjeta de crédito.</div></div>
-          <div class="model-row"><div class="model-name">Propensión de Fuga TPV</div><div class="model-desc">Modelo predictivo de fuga de comercios que reducen el uso de terminales punto de venta.</div></div>
-        </div>
-        <div class="col-kpi">
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Propensión de Fuga Logins</div><div class="model-desc">Detección de señales de abandono basadas en disminución de inicios de sesión.</div></div>
           <div class="kpi-cell"><div class="kpi-chips">
             <div class="kpi-chip"><div class="kpi-chip-num" style="color:#4af0a0">36k<span class="unit">/mes</span></div><div class="kpi-chip-txt">Predicciones de fuga</div></div>
           </div></div>
+        </div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Propensión de Fuga TDC</div><div class="model-desc">Alerta temprana sobre clientes que podrían dejar de usar su tarjeta de crédito.</div></div>
           <div class="kpi-cell"><div class="kpi-chips">
             <div class="kpi-chip"><div class="kpi-chip-num" style="color:#4af0a0">26k<span class="unit">/mes</span></div><div class="kpi-chip-txt">Predicciones fuga TDC</div></div>
           </div></div>
+        </div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Propensión de Fuga TPV</div><div class="model-desc">Modelo predictivo de fuga de comercios que reducen el uso de terminales punto de venta.</div></div>
           <div class="kpi-cell"><div class="kpi-chips">
             <div class="kpi-chip"><div class="kpi-chip-num" style="color:#4af0a0">0.5k<span class="unit">/mes</span></div><div class="kpi-chip-txt">Predicciones fuga TPV</div></div>
           </div></div>
@@ -547,16 +617,20 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
             <div class="cat-count-lbl">4 modelos</div>
           </div>
         </div>
-        <div class="col-models">
-          <div class="model-row"><div class="model-name">Asistente RRHH</div><div class="model-desc">Automatización de consultas internas y procesos administrativos para empleados.</div></div>
-          <div class="model-row"><div class="model-name">Asistente Call Center</div><div class="model-desc">Apoyo a asesores en atención al cliente, análisis y transcripción de la llamada.</div></div>
-          <div class="model-row"><div class="model-name">Asistente Hey Tech</div><div class="model-desc">Atención a clientes y soporte técnico especializado para integración de APIs.</div></div>
-          <div class="model-row"><div class="model-name">Asistente HAP</div><div class="model-desc">Soporte automatizado App / WhatsApp para productos HAP y aclaración de dudas de servicios.</div></div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Asistente RRHH</div><div class="model-desc">Automatización de consultas internas y procesos administrativos para empleados.</div></div>
+          <div class="kpi-cell"><span class="kpi-empty">Sin KPI registrado</span></div>
         </div>
-        <div class="col-kpi">
-          <div class="kpi-cell"><div class="kpi-empty">Sin KPI registrado</div></div>
-          <div class="kpi-cell"><div class="kpi-empty">Sin KPI registrado</div></div>
-          <div class="kpi-cell"><div class="kpi-empty">Sin KPI registrado</div></div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Asistente Call Center</div><div class="model-desc">Apoyo a asesores en atención al cliente, análisis y transcripción de la llamada.</div></div>
+          <div class="kpi-cell"><span class="kpi-empty">Sin KPI registrado</span></div>
+        </div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Asistente Hey Tech</div><div class="model-desc">Atención a clientes y soporte técnico especializado para integración de APIs.</div></div>
+          <div class="kpi-cell"><span class="kpi-empty">Sin KPI registrado</span></div>
+        </div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">Asistente HAP</div><div class="model-desc">Soporte automatizado App / WhatsApp para productos HAP y aclaración de dudas.</div></div>
           <div class="kpi-cell"><div class="kpi-chips">
             <div class="kpi-chip"><div class="kpi-chip-num" style="color:#ff9f40">1,100<span class="unit">/mes</span></div><div class="kpi-chip-txt">Peticiones (App y WhatsApp)</div></div>
           </div></div>
@@ -585,15 +659,17 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
             <div class="cat-count-lbl">3 modelos</div>
           </div>
         </div>
-        <div class="col-models">
-          <div class="model-row"><div class="model-name">HAVI Educación Financiera</div><div class="model-desc">Respuestas y consejos dinámicos para fomentar la cultura financiera del cliente.</div></div>
-          <div class="model-row"><div class="model-name">HAVI Asesor Salud Financiera</div><div class="model-desc">Identificación de gastos e ingresos recurrentes, lectura de estados de cuenta del cliente.</div></div>
-          <div class="model-row"><div class="model-name">HAVI Analista de Acciones</div><div class="model-desc">Atención al cliente y asesoría automatizada en inversiones.</div></div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">HAVI Educación Financiera</div><div class="model-desc">Respuestas y consejos dinámicos para fomentar la cultura financiera del cliente.</div></div>
+          <div class="kpi-cell"><span class="kpi-empty">Sin KPI registrado</span></div>
         </div>
-        <div class="col-kpi">
-          <div class="kpi-cell"><div class="kpi-empty">Sin KPI registrado</div></div>
-          <div class="kpi-cell"><div class="kpi-empty">Sin KPI registrado</div></div>
-          <div class="kpi-cell"><div class="kpi-empty">Sin KPI registrado</div></div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">HAVI Asesor Salud Financiera</div><div class="model-desc">Identificación de gastos e ingresos recurrentes, lectura de estados de cuenta del cliente.</div></div>
+          <div class="kpi-cell"><span class="kpi-empty">Sin KPI registrado</span></div>
+        </div>
+        <div class="row-pair">
+          <div class="model-cell"><div class="model-name">HAVI Analista de Acciones</div><div class="model-desc">Atención al cliente y asesoría automatizada en inversiones.</div></div>
+          <div class="kpi-cell"><span class="kpi-empty">Sin KPI registrado</span></div>
         </div>
       </div>
 
